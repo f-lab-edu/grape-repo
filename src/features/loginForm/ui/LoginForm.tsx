@@ -1,16 +1,41 @@
+import {
+  checkEmailExists,
+  useLoginMutation,
+  useSignUpMutation,
+} from '@/features/loginForm';
 import { FormLayout, InputWithLabel } from '@/shared';
 import { Form } from 'antd';
 import { memo, useCallback, useState } from 'react';
 
 const LoginForm = () => {
-  const [userInfo, setUserInfo] = useState<{ [key: string]: string }>({});
-
+  const [userInfo, setUserInfo] = useState<{ [key: string]: string } | null>(
+    null,
+  );
+  const { mutate: signUpMutaiton } = useSignUpMutation();
+  const { mutate: loginMutation } = useLoginMutation({
+    onError: () => {
+      form.setFields([
+        {
+          name: 'password',
+          errors: ['비밀번호를 확인해주세요'],
+        },
+      ]);
+    },
+  });
   const [form] = Form.useForm();
 
-  const signupHandler = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: api
-  }, []);
+  const signupHandler = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+
+      if (userInfo) {
+        const isEmailExists = await checkEmailExists(userInfo.email);
+        if (!isEmailExists) signUpMutaiton(userInfo);
+        else loginMutation(userInfo);
+      }
+    },
+    [userInfo, signUpMutaiton, loginMutation],
+  );
 
   const onChangeInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +59,7 @@ const LoginForm = () => {
       >
         <InputWithLabel
           label="이메일"
-          value={userInfo.email}
+          value={userInfo?.email ?? ''}
           name="email"
           placeholder="example@gamil.com"
           onChange={onChangeInput}
@@ -54,7 +79,7 @@ const LoginForm = () => {
       >
         <InputWithLabel
           label="비밀번호"
-          value={userInfo.password}
+          value={userInfo?.password ?? ''}
           onChange={onChangeInput}
           placeholder="영문포함 8~16자 이내"
           name="password"
