@@ -13,41 +13,99 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as PubImport } from './routes/_pub'
+import { Route as AuthImport } from './routes/_auth'
 
 // Create Virtual Routes
 
-const IndexLazyImport = createFileRoute('/')()
-const LoginIndexLazyImport = createFileRoute('/login/')()
+const PubIndexLazyImport = createFileRoute('/_pub/')()
+const PubLoginIndexLazyImport = createFileRoute('/_pub/login/')()
+const AuthProfileIndexLazyImport = createFileRoute('/_auth/profile/')()
+const AuthChatIndexLazyImport = createFileRoute('/_auth/chat/')()
 
 // Create/Update Routes
 
-const IndexLazyRoute = IndexLazyImport.update({
-  path: '/',
+const PubRoute = PubImport.update({
+  id: '/_pub',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any)
 
-const LoginIndexLazyRoute = LoginIndexLazyImport.update({
-  path: '/login/',
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/login.index.lazy').then((d) => d.Route))
+} as any)
+
+const PubIndexLazyRoute = PubIndexLazyImport.update({
+  path: '/',
+  getParentRoute: () => PubRoute,
+} as any).lazy(() => import('./routes/_pub.index.lazy').then((d) => d.Route))
+
+const PubLoginIndexLazyRoute = PubLoginIndexLazyImport.update({
+  path: '/login/',
+  getParentRoute: () => PubRoute,
+} as any).lazy(() =>
+  import('./routes/_pub.login.index.lazy').then((d) => d.Route),
+)
+
+const AuthProfileIndexLazyRoute = AuthProfileIndexLazyImport.update({
+  path: '/profile/',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.profile.index.lazy').then((d) => d.Route),
+)
+
+const AuthChatIndexLazyRoute = AuthChatIndexLazyImport.update({
+  path: '/chat/',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.chat.index.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
-    '/login/': {
-      id: '/login/'
+    '/_pub': {
+      id: '/_pub'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PubImport
+      parentRoute: typeof rootRoute
+    }
+    '/_pub/': {
+      id: '/_pub/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof PubIndexLazyImport
+      parentRoute: typeof PubImport
+    }
+    '/_auth/chat/': {
+      id: '/_auth/chat/'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof AuthChatIndexLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/profile/': {
+      id: '/_auth/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthProfileIndexLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_pub/login/': {
+      id: '/_pub/login/'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof LoginIndexLazyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PubLoginIndexLazyImport
+      parentRoute: typeof PubImport
     }
   }
 }
@@ -55,8 +113,11 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  IndexLazyRoute,
-  LoginIndexLazyRoute,
+  AuthRoute: AuthRoute.addChildren({
+    AuthChatIndexLazyRoute,
+    AuthProfileIndexLazyRoute,
+  }),
+  PubRoute: PubRoute.addChildren({ PubIndexLazyRoute, PubLoginIndexLazyRoute }),
 })
 
 /* prettier-ignore-end */
@@ -67,15 +128,39 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/login/"
+        "/_auth",
+        "/_pub"
       ]
     },
-    "/": {
-      "filePath": "index.lazy.tsx"
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/chat/",
+        "/_auth/profile/"
+      ]
     },
-    "/login/": {
-      "filePath": "login.index.lazy.tsx"
+    "/_pub": {
+      "filePath": "_pub.tsx",
+      "children": [
+        "/_pub/",
+        "/_pub/login/"
+      ]
+    },
+    "/_pub/": {
+      "filePath": "_pub.index.lazy.tsx",
+      "parent": "/_pub"
+    },
+    "/_auth/chat/": {
+      "filePath": "_auth.chat.index.lazy.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/profile/": {
+      "filePath": "_auth.profile.index.lazy.tsx",
+      "parent": "/_auth"
+    },
+    "/_pub/login/": {
+      "filePath": "_pub.login.index.lazy.tsx",
+      "parent": "/_pub"
     }
   }
 }
