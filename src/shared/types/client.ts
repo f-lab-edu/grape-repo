@@ -1,7 +1,8 @@
 import type { Session, User } from "@supabase/supabase-js";
 
-export type UserInfoProps = {
-	[key: string]: string;
+export type UserInfo = {
+	email: string;
+	password: string;
 };
 
 export type ResponseUserData = {

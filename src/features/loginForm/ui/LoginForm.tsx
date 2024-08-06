@@ -3,14 +3,15 @@ import {
   useLoginMutation,
   useSignUpMutation,
 } from '@/features/loginForm';
-import { FormLayout, InputWithLabel } from '@/shared';
+import { FormLayout, InputWithLabel, type UserInfo } from '@/shared';
 import { Form } from 'antd';
 import { memo, useCallback, useState } from 'react';
 
 const LoginForm = () => {
-  const [userInfo, setUserInfo] = useState<{ [key: string]: string } | null>(
-    null,
-  );
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    email: '',
+    password: '',
+  });
   const { mutate: signUpMutaiton } = useSignUpMutation();
   const { mutate: loginMutation } = useLoginMutation({
     onError: () => {
@@ -40,7 +41,12 @@ const LoginForm = () => {
   const onChangeInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
-      setUserInfo((prevUserInfo) => ({ ...prevUserInfo, [name]: value }));
+      setUserInfo(
+        (prevUserInfo): UserInfo => ({
+          ...prevUserInfo,
+          [name]: value,
+        }),
+      );
     },
     [],
   );
