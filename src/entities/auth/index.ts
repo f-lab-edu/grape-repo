@@ -1,6 +1,6 @@
 //apis
 export { default as signUpUser } from "./api/signUpUser";
-export { default as singnInUser } from "./api/signInUser";
+export { default as signInUser } from "./api/signInUser";
 export { default as signOutUser } from "./api/signOutUser";
 export { default as getSession } from "./api/getSession";
 

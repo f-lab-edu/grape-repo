@@ -1,7 +1,7 @@
-import type { UserInfoProps } from '@/shared';
+import type { UserInfo } from '@/shared';
 import { supabase } from '@/shared/api';
 
-const signInUser = async ({ email, password }: UserInfoProps) => {
+const signInUser = async ({ email, password }: UserInfo) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,

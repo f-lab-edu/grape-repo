@@ -1,6 +1,5 @@
-import { singnInUser } from '@/entities/auth';
+import { signInUser } from '@/entities/auth';
 import { checkUserNameExists } from '@/features/loginForm';
-import type { UserInfoProps } from '@/shared';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 
@@ -10,9 +9,7 @@ const useLoginMutation = ({ onError }: LoginMutationProps) => {
   const navigate = useNavigate({ from: '/login' });
 
   const { mutate, isError } = useMutation({
-    mutationFn: async (userInfo: UserInfoProps) => {
-      return await singnInUser(userInfo);
-    },
+    mutationFn: signInUser,
     onSuccess: async (data) => {
       const isUserNameExists = await checkUserNameExists(
         data?.user.email as string,

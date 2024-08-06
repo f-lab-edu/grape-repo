@@ -1,5 +1,4 @@
 import { signUpUser } from '@/entities/auth';
-import type { UserInfoProps } from '@/shared';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 
@@ -7,11 +6,8 @@ const useSignUpMutation = () => {
   const navigate = useNavigate({ from: '/login' });
 
   const { mutate, isError } = useMutation({
-    mutationFn: async (userInfo: UserInfoProps) => {
-      return await signUpUser(userInfo);
-    },
-    onSuccess: async (data) => {
-      console.log('인증 성공', data);
+    mutationFn: signUpUser,
+    onSuccess: () => {
       navigate({ to: '/profile' });
     },
 
