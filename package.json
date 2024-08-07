@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "gen-types": "supabase gen types typescript --project-id migdvgbufczfbwarvspi > src/shared/types/database.types.ts"
+    "gen-types": "supabase gen types typescript --project-id migdvgbufczfbwarvspi > src/shared/types/database.types.ts",
+    "vercel-build": "npm cache clean --force && npm install && npm run build"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",
@@ -22,6 +23,7 @@
     "vite-plugin-stylex": "^0.10.1"
   },
   "devDependencies": {
+    "@stylexjs/babel-plugin": "0.4.1",
     "@stylexjs/eslint-plugin": "^0.7.5",
     "@tanstack/react-query-devtools": "^5.51.14",
     "@tanstack/router-cli": "^1.45.13",
