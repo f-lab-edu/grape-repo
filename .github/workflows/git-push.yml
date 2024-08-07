@@ -22,7 +22,7 @@ jobs:
         with:
           source-directory: 'output'
           destination-github-username: xxziiko
-          destination-repository-name: https://github.com/xxziiko/grape
+          destination-repository-name: https://github.com/xxziiko/grape.git
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
