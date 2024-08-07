@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@stylexjs/eslint-plugin": "^0.7.5",
+    "@stylexjs/rollup-plugin": "^0.7.5",
     "@tanstack/react-query-devtools": "^5.51.14",
     "@tanstack/router-cli": "^1.45.13",
     "@tanstack/router-devtools": "^1.45.11",
