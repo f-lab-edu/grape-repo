@@ -18,13 +18,9 @@
     "@tanstack/react-router": "^1.45.11",
     "antd": "^5.19.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "vite-plugin-stylex": "^0.10.1"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.24.7",
-    "@rollup/plugin-babel": "^6.0.4",
-    "@stylexjs/babel-plugin": "^0.7.5",
     "@stylexjs/eslint-plugin": "^0.7.5",
     "@tanstack/react-query-devtools": "^5.51.14",
     "@tanstack/router-cli": "^1.45.13",
@@ -43,11 +39,7 @@
     "prettier": "^3.3.3",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
-    "vite-tsconfig-paths": "^4.3.2"
-  },
-  "overrides": {
-    "vite-plugin-stylex": {
-      "@stylexjs/babel-plugin": "0.4.1"
-    }
+    "vite-tsconfig-paths": "^4.3.2",
+    "vite-plugin-stylex": "^0.10.1"
   }
 }
