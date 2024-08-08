@@ -10,11 +10,15 @@ type InputWithLabelProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const InputWithLabel = ({ label, ...props }: InputWithLabelProps) => {
+const InputWithLabel = ({
+  label,
+  value = '',
+  ...props
+}: InputWithLabelProps) => {
   return (
     <div {...stylex.props(styles.inputBox)}>
       <p {...stylex.props(styles.label)}>{label}</p>
-      <input {...props} {...stylex.props(styles.input)} />
+      <input value={value} {...props} {...stylex.props(styles.input)} />
     </div>
   );
 };
