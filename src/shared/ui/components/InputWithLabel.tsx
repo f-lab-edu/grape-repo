@@ -1,5 +1,4 @@
 import * as stylex from '@stylexjs/stylex';
-import { Input } from 'antd';
 import { memo } from 'react';
 
 type InputWithLabelProps = {
@@ -15,7 +14,7 @@ const InputWithLabel = ({ label, ...props }: InputWithLabelProps) => {
   return (
     <div {...stylex.props(styles.inputBox)}>
       <p {...stylex.props(styles.label)}>{label}</p>
-      <Input {...props} {...stylex.props(styles.input)} />
+      <input {...props} {...stylex.props(styles.input)} />
     </div>
   );
 };
@@ -35,6 +34,10 @@ const styles = stylex.create({
   },
   input: {
     borderRadius: '24px',
-    padding: '10px 15px',
+    padding: '15px',
+    borderColor: '#dedede',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    outlineColor: '#DCC9EB',
   },
 });
