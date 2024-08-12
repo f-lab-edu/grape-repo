@@ -19,8 +19,7 @@ const useLoginMutation = ({ onError }: LoginMutationProps) => {
       else navigate({ to: '/chat' });
     },
 
-    onError: (error) => {
-      console.log('로그인실패', error);
+    onError: () => {
       onError();
     },
   });

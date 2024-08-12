@@ -11,9 +11,7 @@ const useSignUpMutation = () => {
       navigate({ to: '/profile' });
     },
 
-    onError: (error) => {
-      console.log('인증 실패', error);
-    },
+    // onError: (error) => {},
   });
 
   return { mutate, isError };

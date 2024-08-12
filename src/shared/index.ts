@@ -9,3 +9,6 @@ export { default as ButtonBoxLayout } from "./ui/layouts/ButtonBoxLayout";
 
 // types
 export * from "./types/client";
+
+// assets
+export { default as KakaoIcon } from "./assets/KakaoIcon";

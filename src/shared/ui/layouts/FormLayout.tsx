@@ -36,7 +36,7 @@ const FormLayout = ({
         <DefaultButton
           command={buttonCommand}
           onClick={onClick}
-          htmlType="submit"
+          type="submit"
           disabled={!submittable}
         />
       </ButtonBoxLayout>

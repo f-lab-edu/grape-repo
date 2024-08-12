@@ -1,4 +1,10 @@
-import { ButtonBoxLayout, DefaultButton, PageLayout } from '@/shared';
+import { signInWithKakao } from '@/pages/home';
+import {
+  ButtonBoxLayout,
+  DefaultButton,
+  KakaoIcon,
+  PageLayout,
+} from '@/shared';
 import { Header } from '@/widgets/header';
 import * as stylex from '@stylexjs/stylex';
 import { useNavigate } from '@tanstack/react-router';
@@ -15,7 +21,12 @@ const HomePage = () => {
         <div>홈</div>
       </div>
       <ButtonBoxLayout>
-        <DefaultButton command="카카오로 시작하기" style={styles.kakaoButton} />
+        <DefaultButton
+          command="카카오 로그인"
+          style={styles.kakaoButton}
+          icon={<KakaoIcon />}
+          onClick={signInWithKakao}
+        />
         <DefaultButton command="이메일로 시작하기" onClick={goToLogin} />
       </ButtonBoxLayout>
     </PageLayout>
@@ -29,9 +40,13 @@ const styles = stylex.create({
     height: '100%',
   },
 
+  borderRadius: {
+    borderRadius: '12px',
+  },
+
   kakaoButton: {
     backgroundColor: {
-      default: '#F6E10C',
+      default: '#FEE500',
       ':hover': {
         default: 'rgba(246, 225, 12, 0.6)',
       },
@@ -39,6 +54,6 @@ const styles = stylex.create({
     borderColor: {
       default: 'rgba(246, 225, 12, 0.6)',
     },
-    color: '#000000',
+    color: '#000000 85%',
   },
 });
