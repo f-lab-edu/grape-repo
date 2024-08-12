@@ -8,7 +8,7 @@ import { memo } from 'react';
 type ButtonProps = {
   command: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
-  type?: 'submit' | 'button' | 'reset' | undefined;
+  type?: 'submit' | 'button' | 'reset';
   style?: StyleXArray<boolean | CompiledStyles | null | undefined>;
   disabled?: boolean;
   icon?: React.ReactNode;
@@ -30,7 +30,7 @@ const DefaultButton = ({
       )}
       {...props}
     >
-      {icon && icon}
+      {icon}
       {command}
     </button>
   );
