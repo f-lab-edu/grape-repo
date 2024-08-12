@@ -54,6 +54,7 @@ const styles = stylex.create({
     margin: 0,
     fontSize: '20px',
     fontWeight: 600,
+    whiteSpace: 'pre',
   },
 
   icons: {
