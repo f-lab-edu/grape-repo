@@ -8,16 +8,17 @@ import { memo } from 'react';
 type ButtonProps = {
   command: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
-  htmlType?: 'submit' | 'button' | 'reset' | undefined;
+  type?: 'submit' | 'button' | 'reset';
   style?: StyleXArray<boolean | CompiledStyles | null | undefined>;
   disabled?: boolean;
+  icon?: React.ReactNode;
 };
 
 const DefaultButton = ({
   command,
   style,
-  htmlType = 'button',
   disabled = false,
+  icon,
   ...props
 }: ButtonProps) => {
   return (
@@ -27,10 +28,9 @@ const DefaultButton = ({
         disabled ? styles.disabled : styles.base,
         style,
       )}
-      type={htmlType}
-      disabled={disabled}
       {...props}
     >
+      {icon}
       {command}
     </button>
   );
@@ -40,10 +40,12 @@ export default memo(DefaultButton);
 
 const styles = stylex.create({
   base: {
-    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px',
     minHeight: '60px',
-
-    backgroundColor: {
+    background: {
       default: 'rgba(220, 201, 235, 0.4)',
       ':hover': {
         default: 'rgba(220, 201, 235, 0.6)',
@@ -57,8 +59,8 @@ const styles = stylex.create({
     borderColor: {
       default: '#DCC9EB',
     },
-    fontWeight: 700,
-    fontSize: '18px',
+    fontWeight: 600,
+    fontSize: '17px',
     color: '#6C3C91',
     cursor: 'pointer',
   },
