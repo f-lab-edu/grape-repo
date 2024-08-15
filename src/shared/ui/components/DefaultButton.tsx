@@ -54,11 +54,12 @@ const styles = stylex.create({
         default: '#DCC9EB',
       },
     },
-    borderStyle: 'none',
+
+    borderColor: '#DCC9EB',
+    borderWidth: '1px',
+    borderStyle: 'solid',
     borderRadius: '30px',
-    borderColor: {
-      default: '#DCC9EB',
-    },
+
     fontWeight: 600,
     fontSize: '17px',
     color: '#6C3C91',
@@ -68,5 +69,6 @@ const styles = stylex.create({
   disabled: {
     backgroundColor: '#E1E0E2',
     color: '#A3A3A3',
+    borderStyle: 'none',
   },
 });
