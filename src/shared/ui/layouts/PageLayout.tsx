@@ -1,8 +1,18 @@
 import * as stylex from '@stylexjs/stylex';
+import type {
+  CompiledStyles,
+  StyleXArray,
+} from '@stylexjs/stylex/lib/StyleXTypes';
 import { memo } from 'react';
 
-const PageLayout = ({ children }: { children: React.ReactNode }) => {
-  return <div {...stylex.props(styles.box)}>{children}</div>;
+const PageLayout = ({
+  children,
+  style,
+}: {
+  children: React.ReactNode;
+  style?: StyleXArray<boolean | CompiledStyles | null | undefined>;
+}) => {
+  return <div {...stylex.props(styles.box, style)}>{children}</div>;
 };
 
 export default memo(PageLayout);
