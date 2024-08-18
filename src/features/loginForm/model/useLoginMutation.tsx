@@ -1,27 +1,23 @@
-import { signInUser } from '@/entities/auth';
+import { signInUser, useAuth } from '@/entities/auth';
 import { checkUserNameExists } from '@/features/loginForm';
+import type { OnErrorMutate } from '@/shared';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 
-type LoginMutationProps = { onError: () => void };
-
-const useLoginMutation = ({ onError }: LoginMutationProps) => {
+const useLoginMutation = ({ onError }: OnErrorMutate) => {
   const navigate = useNavigate({ from: '/login' });
+  const { hasUserNameHandler } = useAuth();
 
   const { mutate, isError } = useMutation({
     mutationFn: signInUser,
     onSuccess: async (data) => {
-      const isUserNameExists = await checkUserNameExists(
-        data?.user.email as string,
-      );
+      const hasUserName = await checkUserNameExists(data?.user.email as string);
 
-      if (!isUserNameExists) navigate({ to: '/profile' });
+      if (!hasUserName) hasUserNameHandler(false);
       else navigate({ to: '/chat' });
     },
 
-    onError: () => {
-      onError();
-    },
+    onError,
   });
 
   return { mutate, isError };

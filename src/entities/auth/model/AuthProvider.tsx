@@ -7,6 +7,11 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [hasUserName, setHasUserName] = useState<boolean>(true);
+
+  const hasUserNameHandler = (userNameExists: boolean) => {
+    setHasUserName(userNameExists);
+  };
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -15,7 +20,9 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, hasUserName, hasUserNameHandler }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

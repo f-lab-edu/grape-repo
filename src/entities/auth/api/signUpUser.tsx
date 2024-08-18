@@ -7,7 +7,7 @@ const signUpUser = async ({ email, password }: UserInfo) => {
     password,
   });
 
-  if (error) throw new Error(error.message);
+  if (error) throw error.message;
 
   return data;
 };

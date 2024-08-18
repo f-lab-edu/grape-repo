@@ -7,8 +7,7 @@ import {
   PageLayout,
   greetingMessages,
 } from '@/shared';
-
-import { Header } from '@/widgets/header';
+import { Header } from '@/widgets';
 import * as stylex from '@stylexjs/stylex';
 import { useNavigate } from '@tanstack/react-router';
 import { memo } from 'react';
