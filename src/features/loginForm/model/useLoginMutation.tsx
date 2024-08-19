@@ -11,7 +11,7 @@ const useLoginMutation = ({ onError }: OnErrorMutate) => {
   const { mutate, isError } = useMutation({
     mutationFn: signInUser,
     onSuccess: async (data) => {
-      const hasUserName = await checkUserNameExists(data?.user.email as string);
+      const hasUserName = await checkUserNameExists(data?.user.email);
 
       if (!hasUserName) hasUserNameHandler(false);
       else navigate({ to: '/chat' });

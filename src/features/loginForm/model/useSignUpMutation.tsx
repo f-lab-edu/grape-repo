@@ -7,12 +7,9 @@ const useSignUpMutation = () => {
   const { mutate, isError } = useMutation({
     mutationFn: signUpUser,
     onSuccess: async (data) => {
-      const hasUserName = await checkUserNameExists(data?.user.email as string);
-
+      const hasUserName = await checkUserNameExists(data?.user?.email);
       if (!hasUserName) hasUserNameHandler(false);
     },
-
-    // onError: (error) => {},
   });
 
   return { mutate, isError };

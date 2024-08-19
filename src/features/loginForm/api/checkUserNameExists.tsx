@@ -1,6 +1,6 @@
 import { selectEmail } from '@/shared/api';
 
-const checkUserNameExists = async (email: string) => {
+const checkUserNameExists = async (email: string | undefined) => {
   const { data, error } = await selectEmail(email);
 
   if (error) throw new Error(error.message);
