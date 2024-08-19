@@ -1,24 +1,19 @@
 import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
+import type { UseFormRegisterReturn } from 'react-hook-form';
 
 type InputWithLabelProps = {
   label: string;
-  value: string;
+  register: UseFormRegisterReturn;
   placeholder?: string;
-  name: string;
   type: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const InputWithLabel = ({
-  label,
-  value = '',
-  ...props
-}: InputWithLabelProps) => {
+const InputWithLabel = ({ label, register, ...props }: InputWithLabelProps) => {
   return (
     <div {...stylex.props(styles.inputBox)}>
       <p {...stylex.props(styles.label)}>{label}</p>
-      <input value={value} {...props} {...stylex.props(styles.input)} />
+      <input {...register} {...props} {...stylex.props(styles.input)} />
     </div>
   );
 };
@@ -36,6 +31,7 @@ const styles = stylex.create({
     color: '#a3a3a3',
     fontSize: '13px',
   },
+
   input: {
     borderRadius: '24px',
     padding: '15px',

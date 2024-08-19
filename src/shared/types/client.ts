@@ -16,4 +16,6 @@ export type AuthContextType = {
 	updateUserNameStatus: (bool: boolean) => void;
 };
 
-export type OnErrorMutate = { onError: () => void };
+export type UserName = {
+	userName: string;
+};

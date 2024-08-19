@@ -1,43 +1,39 @@
-import { FormLayout, InputWithLabel } from '@/shared';
+import { FormLayout, InputWithLabel, type UserName } from '@/shared';
 import { PersonIcon } from '@radix-ui/react-icons';
 import * as stylex from '@stylexjs/stylex';
-import { Avatar, Form } from 'antd';
-import { memo, useCallback, useState } from 'react';
+import { Avatar } from 'antd';
+import { memo, useCallback } from 'react';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useUserNameMutation } from '..';
 
 const ProfileForm = () => {
-  const [userName, setUserName] = useState<string>('');
-
-  const { mutate } = useUserNameMutation({
-    onError: () => {
-      form.setFields([
-        {
-          name: 'userName',
-          errors: ['이름을 입력해주세요'],
-        },
-      ]);
-    },
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<UserName>({
+    mode: 'onBlur',
+    criteriaMode: 'all',
+    shouldFocusError: true,
   });
-  const [form] = Form.useForm();
+  const { mutate } = useUserNameMutation();
+  const buttonOptions = {
+    command: '확인',
+    disabled: !isValid,
+  };
 
-  const onChangeInput = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setUserName(event.target.value);
+  const updateUserName: SubmitHandler<UserName> = useCallback(
+    (data) => {
+      mutate(data);
     },
-    [],
-  );
-
-  const updateUserName = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-
-      if (userName) mutate(userName);
-    },
-    [userName, mutate],
+    [mutate],
   );
 
   return (
-    <FormLayout form={form} onClick={updateUserName} buttonCommand="확인">
+    <FormLayout
+      buttonOptions={buttonOptions}
+      onSubmit={handleSubmit(updateUserName)}
+    >
       <div {...stylex.props(styles.flexColumn)}>
         <p {...stylex.props(styles.label)}>프로필 사진</p>
 
@@ -46,18 +42,20 @@ const ProfileForm = () => {
         </div>
       </div>
 
-      <Form.Item
-        name="userName"
-        rules={[{ required: true, message: '이름을 입력해주세요' }]}
-      >
-        <InputWithLabel
-          label="이름"
-          name="userName"
-          value={userName}
-          onChange={onChangeInput}
-          type="text"
-        />
-      </Form.Item>
+      <InputWithLabel
+        label="이름"
+        type="text"
+        register={register('userName', {
+          required: '이름을 입력해주세요',
+          maxLength: 5,
+          validate: {
+            noWhitespace: (value) => {
+              return !/\s/.test(value) || '이름에 공백을 포함할 수 없습니다';
+            },
+          },
+        })}
+      />
+      <p {...stylex.props(styles.errors)}>{errors.userName?.message}</p>
     </FormLayout>
   );
 };
@@ -80,5 +78,10 @@ const styles = stylex.create({
     margin: 0,
     color: '#a3a3a3',
     fontSize: '14px',
+  },
+
+  errors: {
+    margin: 0,
+    color: '#EE4A4A',
   },
 });

@@ -18,4 +18,4 @@ export * from "./api";
 export { default as KakaoIcon } from "./assets/KakaoIcon";
 
 // constants
-export * from "./constants/greetingMessages";
+export * from "./constants";

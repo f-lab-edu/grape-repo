@@ -1,10 +1,12 @@
 import { signInUser, useAuth } from '@/entities/auth';
 import { checkUserNameExists } from '@/features/loginForm';
-import type { OnErrorMutate } from '@/shared';
+import type { UserInfo } from '@/shared';
+
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
+import type { UseFormSetError } from 'react-hook-form';
 
-const useLoginMutation = ({ onError }: OnErrorMutate) => {
+const useLoginMutation = (setError: UseFormSetError<UserInfo>) => {
   const navigate = useNavigate({ from: '/login' });
   const { updateUserNameStatus } = useAuth();
 
@@ -16,8 +18,12 @@ const useLoginMutation = ({ onError }: OnErrorMutate) => {
       if (!hasUserName) updateUserNameStatus(false);
       else navigate({ to: '/chat' });
     },
-
-    onError,
+    onError: () => {
+      setError('password', {
+        type: 'manual',
+        message: '비밀번호가 틀렸습니다',
+      });
+    },
   });
 
   return { mutate, isError };

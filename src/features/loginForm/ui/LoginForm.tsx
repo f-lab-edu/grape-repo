@@ -3,97 +3,75 @@ import {
   useLoginMutation,
   useSignUpMutation,
 } from '@/features/loginForm';
-import { FormLayout, InputWithLabel, type UserInfo } from '@/shared';
-import { Form } from 'antd';
-import { memo, useCallback, useState } from 'react';
+import {
+  FormLayout,
+  InputWithLabel,
+  type UserInfo,
+  emailValidation,
+  passwordValidation,
+} from '@/shared';
+import * as stylex from '@stylexjs/stylex';
+import { memo, useCallback } from 'react';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 
 const LoginForm = () => {
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    email: '',
-    password: '',
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isValid },
+  } = useForm<UserInfo>({
+    mode: 'onBlur',
+    criteriaMode: 'all',
+    shouldFocusError: true,
   });
   const { mutate: signUpMutaiton } = useSignUpMutation();
-  const { mutate: loginMutation } = useLoginMutation({
-    onError: () => {
-      form.setFields([
-        {
-          name: 'password',
-          errors: ['비밀번호를 확인해주세요'],
-        },
-      ]);
-    },
-  });
-  const [form] = Form.useForm();
+  const { mutate: loginMutation } = useLoginMutation(setError);
+  const buttonOptions = {
+    command: '시작하기',
+    disabled: !isValid,
+  };
 
-  const signupHandler = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-
-      if (userInfo) {
-        const isEmailExists = await checkEmailExists(userInfo.email);
-        if (!isEmailExists) signUpMutaiton(userInfo);
-        else loginMutation(userInfo);
+  const handleSignUp: SubmitHandler<UserInfo> = useCallback(
+    async (data) => {
+      if (data) {
+        const isEmailExists = await checkEmailExists(data.email);
+        if (!isEmailExists) signUpMutaiton(data);
+        else loginMutation(data);
       }
     },
-    [userInfo, signUpMutaiton, loginMutation],
-  );
-
-  const onChangeInput = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = event.target;
-      setUserInfo(
-        (prevUserInfo): UserInfo => ({
-          ...prevUserInfo,
-          [name]: value,
-        }),
-      );
-    },
-    [],
+    [signUpMutaiton, loginMutation],
   );
 
   return (
-    <FormLayout form={form} onClick={signupHandler} buttonCommand="시작하기">
-      <Form.Item
-        name="email"
-        rules={[
-          { required: true, message: '이메일을 입력해주세요' },
-          {
-            type: 'email',
-            message: '이메일 형식으로 입력해주세요',
-          },
-        ]}
-      >
-        <InputWithLabel
-          label="이메일"
-          value={userInfo?.email ?? ''}
-          name="email"
-          placeholder="example@gamil.com"
-          onChange={onChangeInput}
-          type="text"
-        />
-      </Form.Item>
+    <FormLayout
+      buttonOptions={buttonOptions}
+      onSubmit={handleSubmit(handleSignUp)}
+    >
+      <InputWithLabel
+        register={register('email', emailValidation)}
+        label="이메일"
+        placeholder="example@gamil.com"
+        type="text"
+      />
+      <p {...stylex.props(styles.errors)}>{errors.email?.message}</p>
 
-      <Form.Item
-        name="password"
-        rules={[
-          { required: true, message: '비밀번호를 입력해주세요' },
-          {
-            pattern: /^(?=.*[a-zA-Z])(?=.*\d).{8,16}$/,
-            message: '비밀번호는 영문 포함 8자 이상 16자 이하로 입력해주세요',
-          },
-        ]}
-      >
-        <InputWithLabel
-          label="비밀번호"
-          value={userInfo?.password ?? ''}
-          onChange={onChangeInput}
-          placeholder="영문포함 8~16자 이내"
-          name="password"
-          type="password"
-        />
-      </Form.Item>
+      <InputWithLabel
+        register={register('password', passwordValidation)}
+        label="비밀번호"
+        placeholder="영문포함 8~16자 이내"
+        type="password"
+      />
+      <p {...stylex.props(styles.errors)}>{errors.password?.message}</p>
     </FormLayout>
   );
 };
 
 export default memo(LoginForm);
+
+const styles = stylex.create({
+  errors: {
+    margin: 0,
+    color: '#EE4A4A',
+  },
+});
