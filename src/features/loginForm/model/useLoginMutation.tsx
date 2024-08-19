@@ -6,14 +6,14 @@ import { useNavigate } from '@tanstack/react-router';
 
 const useLoginMutation = ({ onError }: OnErrorMutate) => {
   const navigate = useNavigate({ from: '/login' });
-  const { hasUserNameHandler } = useAuth();
+  const { updateUserNameStatus } = useAuth();
 
   const { mutate, isError } = useMutation({
     mutationFn: signInUser,
     onSuccess: async (data) => {
       const hasUserName = await checkUserNameExists(data?.user.email);
 
-      if (!hasUserName) hasUserNameHandler(false);
+      if (!hasUserName) updateUserNameStatus(false);
       else navigate({ to: '/chat' });
     },
 

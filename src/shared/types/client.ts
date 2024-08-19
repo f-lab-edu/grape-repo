@@ -13,7 +13,7 @@ export type ResponseUserData = {
 export type AuthContextType = {
 	user: User | null;
 	hasUserName: boolean;
-	hasUserNameHandler: (bool: boolean) => void;
+	updateUserNameStatus: (bool: boolean) => void;
 };
 
 export type OnErrorMutate = { onError: () => void };

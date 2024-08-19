@@ -3,12 +3,12 @@ import { checkUserNameExists } from '@/features/loginForm';
 import { useMutation } from '@tanstack/react-query';
 
 const useSignUpMutation = () => {
-  const { hasUserNameHandler } = useAuth();
+  const { updateUserNameStatus } = useAuth();
   const { mutate, isError } = useMutation({
     mutationFn: signUpUser,
     onSuccess: async (data) => {
       const hasUserName = await checkUserNameExists(data?.user?.email);
-      if (!hasUserName) hasUserNameHandler(false);
+      if (!hasUserName) updateUserNameStatus(false);
     },
   });
 
