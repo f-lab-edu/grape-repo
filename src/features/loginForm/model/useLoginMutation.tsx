@@ -15,7 +15,7 @@ const useLoginMutation = (setError: UseFormSetError<UserInfo>) => {
     onSuccess: async (data) => {
       const hasUserName = await checkUserNameExists(data?.user.email);
 
-      if (!hasUserName) updateUserNameStatus(false);
+      if (!hasUserName) updateUserNameStatus(true);
       else navigate({ to: '/chat' });
     },
     onError: () => {

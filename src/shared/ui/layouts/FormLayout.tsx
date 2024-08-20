@@ -17,7 +17,6 @@ const FormLayout = ({ children, onSubmit, buttonOptions }: FormLayoutProps) => {
       <div {...stylex.props(styles.box)}>{children}</div>
 
       <ButtonBoxLayout>
-        ,
         <DefaultButton {...buttonOptions} type="submit" />
       </ButtonBoxLayout>
     </form>

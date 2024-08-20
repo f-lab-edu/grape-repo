@@ -7,7 +7,7 @@ import { memo, useEffect, useState } from 'react';
 
 const LoginPage = () => {
   const [step, setStep] = useState<'로그인' | '프로필설정'>('로그인');
-  const { hasUserName } = useAuth();
+  const { isUserNameEmpty } = useAuth();
 
   const title =
     step === '로그인'
@@ -15,8 +15,8 @@ const LoginPage = () => {
       : '반가워요\n사용하실 이름을 작성해주세요';
 
   useEffect(() => {
-    if (!hasUserName) setStep('프로필설정');
-  }, [hasUserName]);
+    if (isUserNameEmpty) setStep('프로필설정');
+  }, [isUserNameEmpty]);
 
   return (
     <PageLayout>

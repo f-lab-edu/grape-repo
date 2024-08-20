@@ -7,10 +7,10 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [hasUserName, setHasUserName] = useState<boolean>(true);
+  const [isUserNameEmpty, setIsUserNameEmpty] = useState<boolean>(false);
 
   const updateUserNameStatus = (userNameExists: boolean) => {
-    setHasUserName(userNameExists);
+    setIsUserNameEmpty(userNameExists);
   };
 
   useEffect(() => {
@@ -20,7 +20,9 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, hasUserName, updateUserNameStatus }}>
+    <AuthContext.Provider
+      value={{ user, isUserNameEmpty, updateUserNameStatus }}
+    >
       {children}
     </AuthContext.Provider>
   );

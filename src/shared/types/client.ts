@@ -12,7 +12,7 @@ export type ResponseUserData = {
 
 export type AuthContextType = {
 	user: User | null;
-	hasUserName: boolean;
+	isUserNameEmpty: boolean;
 	updateUserNameStatus: (bool: boolean) => void;
 };
 

@@ -8,7 +8,7 @@ const useSignUpMutation = () => {
     mutationFn: signUpUser,
     onSuccess: async (data) => {
       const hasUserName = await checkUserNameExists(data?.user?.email);
-      if (!hasUserName) updateUserNameStatus(false);
+      if (!hasUserName) updateUserNameStatus(true);
     },
   });
 
