@@ -13,7 +13,7 @@ const useLoginMutation = (setError: UseFormSetError<UserInfo>) => {
   const { mutate, isError } = useMutation({
     mutationFn: signInUser,
     onSuccess: async (data) => {
-      const hasUserName = await checkUserNameExists(data?.user.email);
+      const hasUserName = await checkUserNameExists(data?.user?.email);
 
       if (!hasUserName) updateUserNameStatus(true);
       else navigate({ to: '/chat' });
