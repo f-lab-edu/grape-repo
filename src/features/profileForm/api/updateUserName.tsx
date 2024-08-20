@@ -1,4 +1,4 @@
-import { supabase } from '@/shared/api';
+import { handleError, supabase } from '@/shared';
 
 const updateUserName = async ({ userName }: { userName: string }) => {
   const {
@@ -13,7 +13,7 @@ const updateUserName = async ({ userName }: { userName: string }) => {
     .update({ user_name: userName })
     .eq('id', user.id);
 
-  if (updateError) throw new Error(updateError.message);
+  handleError(updateError);
 
   return data;
 };

@@ -1,4 +1,4 @@
-import { supabase } from '@/shared/api';
+import { handleError, supabase } from '@/shared';
 
 const signInWithKakao = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
@@ -8,7 +8,7 @@ const signInWithKakao = async () => {
     },
   });
 
-  if (error) throw new Error(error.message);
+  handleError(error);
 };
 
 export default signInWithKakao;

@@ -1,5 +1,4 @@
-import type { UserInfo } from '@/shared';
-import { supabase } from '@/shared/api';
+import { type UserInfo, handleError, supabase } from '@/shared';
 
 const signInUser = async ({ email, password }: UserInfo) => {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -7,7 +6,7 @@ const signInUser = async ({ email, password }: UserInfo) => {
     password,
   });
 
-  if (error) throw error;
+  handleError(error);
 
   return data;
 };

@@ -19,3 +19,6 @@ export { default as KakaoIcon } from "./assets/KakaoIcon";
 
 // constants
 export * from "./constants";
+
+// utils
+export * from "./utils/errorHandling";
