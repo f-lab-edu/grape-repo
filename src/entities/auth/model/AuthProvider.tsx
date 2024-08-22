@@ -1,27 +1,24 @@
 import { AuthContext } from '@/entities/auth';
-import { supabase } from '@/shared/api';
-import type { User } from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
+import type { SessionType } from '@/shared';
+import { useState } from 'react';
 
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isUserNameEmpty, setIsUserNameEmpty] = useState<boolean>(false);
+  const [session, setSession] = useState<SessionType>(null);
+  const [userName, setUserName] = useState<string | null>(null);
 
-  const updateUserNameStatus = (userNameExists: boolean) => {
-    setIsUserNameEmpty(userNameExists);
+  const handleUserName = (username: string) => {
+    setUserName(username);
   };
 
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
-    });
-  }, []);
+  const handleSession = (data: SessionType) => {
+    setSession(data);
+  };
 
   return (
     <AuthContext.Provider
-      value={{ user, isUserNameEmpty, updateUserNameStatus }}
+      value={{ session, userName, handleUserName, handleSession }}
     >
       {children}
     </AuthContext.Provider>

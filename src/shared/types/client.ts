@@ -1,5 +1,7 @@
 import type { Session, User } from "@supabase/supabase-js";
 
+export type SessionType = Session | null;
+
 export type UserInfo = {
 	email: string;
 	password: string;
@@ -7,13 +9,14 @@ export type UserInfo = {
 
 export type ResponseUserData = {
 	user: User | null;
-	session: Session | null;
+	session: SessionType;
 };
 
 export type AuthContextType = {
-	user: User | null;
-	isUserNameEmpty: boolean;
-	updateUserNameStatus: (bool: boolean) => void;
+	session: SessionType;
+	userName: string | null;
+	handleUserName: (username: string) => void;
+	handleSession: (data: SessionType) => void;
 };
 
 export type UserName = {
