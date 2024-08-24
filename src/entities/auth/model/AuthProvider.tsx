@@ -8,17 +8,9 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [session, setSession] = useState<SessionType>(null);
   const [userName, setUserName] = useState<string | null>(null);
 
-  const handleUserName = (username: string) => {
-    setUserName(username);
-  };
-
-  const handleSession = (data: SessionType) => {
-    setSession(data);
-  };
-
   return (
     <AuthContext.Provider
-      value={{ session, userName, handleUserName, handleSession }}
+      value={{ session, userName, setSession, setUserName }}
     >
       {children}
     </AuthContext.Provider>

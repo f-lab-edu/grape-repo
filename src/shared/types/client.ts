@@ -1,4 +1,5 @@
 import type { Session, User } from "@supabase/supabase-js";
+import type { Dispatch, SetStateAction } from "react";
 
 export type SessionType = Session | null;
 
@@ -15,8 +16,8 @@ export type ResponseUserData = {
 export type AuthContextType = {
 	session: SessionType;
 	userName: string | null;
-	handleUserName: (username: string) => void;
-	handleSession: (data: SessionType) => void;
+	setUserName: Dispatch<SetStateAction<string | null>>;
+	setSession: Dispatch<SetStateAction<SessionType | null>>;
 };
 
 export type UserName = {

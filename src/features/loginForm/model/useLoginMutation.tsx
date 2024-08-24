@@ -8,16 +8,16 @@ import type { UseFormSetError } from 'react-hook-form';
 
 const useLoginMutation = (setError: UseFormSetError<UserInfo>) => {
   const navigate = useNavigate({ from: '/login' });
-  const { handleUserName, handleSession } = useAuth();
+  const { setUserName, setSession } = useAuth();
 
   const { mutate, isError } = useMutation({
     mutationFn: signInUser,
     onSuccess: async (data) => {
-      handleSession(data.session);
+      setSession(data.session);
 
       const userName = await checkUserNameExists(data?.user?.email);
       if (userName) {
-        handleUserName(userName);
+        setUserName(userName);
         navigate({ to: '/chat' });
       }
     },
