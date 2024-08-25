@@ -1,46 +1,25 @@
 import { ButtonBoxLayout, DefaultButton } from '@/shared';
 import * as stylex from '@stylexjs/stylex';
-import { Form, type FormInstance } from 'antd';
-import { memo, useEffect, useState } from 'react';
+import { type FormEventHandler, memo } from 'react';
 
 type FormLayoutProps = {
   children: React.ReactNode;
-  form: FormInstance<unknown>;
-  onClick?: React.MouseEventHandler<HTMLElement>;
-  buttonCommand: string;
+  onSubmit?: FormEventHandler<HTMLFormElement>;
+  buttonOptions: {
+    command: string;
+    disabled: boolean;
+  };
 };
 
-const FormLayout = ({
-  children,
-  form,
-  onClick,
-  buttonCommand,
-}: FormLayoutProps) => {
-  const [submittable, setSubmittable] = useState<boolean>(false);
-  const values = Form.useWatch([], form);
-
-  useEffect(() => {
-    if (values) {
-      form
-        .validateFields({ validateOnly: true })
-        .then(() => setSubmittable(true))
-        .catch(() => setSubmittable(false));
-    }
-  }, [form, values]);
-
+const FormLayout = ({ children, onSubmit, buttonOptions }: FormLayoutProps) => {
   return (
-    <Form form={form} {...stylex.props(styles.box)}>
+    <form {...stylex.props(styles.box)} onSubmit={onSubmit}>
       <div {...stylex.props(styles.box)}>{children}</div>
 
       <ButtonBoxLayout>
-        <DefaultButton
-          command={buttonCommand}
-          onClick={onClick}
-          type="submit"
-          disabled={!submittable}
-        />
+        <DefaultButton {...buttonOptions} type="submit" />
       </ButtonBoxLayout>
-    </Form>
+    </form>
   );
 };
 

@@ -1,17 +1,17 @@
-import { signUpUser } from '@/entities/auth';
+import { signUpUser, useAuth } from '@/entities/auth';
+import { checkUserNameExists } from '@/features/loginForm';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
 
 const useSignUpMutation = () => {
-  const navigate = useNavigate({ from: '/login' });
-
+  const { setSession, setUserName } = useAuth();
   const { mutate, isError } = useMutation({
     mutationFn: signUpUser,
-    onSuccess: () => {
-      navigate({ to: '/profile' });
-    },
+    onSuccess: async (data) => {
+      setSession(data.session);
 
-    // onError: (error) => {},
+      const userName = await checkUserNameExists(data?.user?.email);
+      if (userName) setUserName(userName);
+    },
   });
 
   return { mutate, isError };

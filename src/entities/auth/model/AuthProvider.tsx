@@ -1,21 +1,19 @@
 import { AuthContext } from '@/entities/auth';
-import { supabase } from '@/shared/api';
-import type { User } from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
+import type { SessionType } from '@/shared';
+import { useState } from 'react';
 
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
-    });
-  }, []);
+  const [session, setSession] = useState<SessionType>(null);
+  const [userName, setUserName] = useState<string | null>(null);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{ session, userName, setSession, setUserName }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };
 

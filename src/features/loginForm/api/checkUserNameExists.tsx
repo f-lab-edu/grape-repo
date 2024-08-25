@@ -1,9 +1,9 @@
-import { selectEmail } from '@/shared/api';
+import { handleError, selectEmail } from '@/shared';
 
-const checkUserNameExists = async (email: string) => {
+const checkUserNameExists = async (email: string | undefined) => {
   const { data, error } = await selectEmail(email);
 
-  if (error) throw new Error(error.message);
+  handleError(error);
 
   return data?.[0]?.user_name;
 };
