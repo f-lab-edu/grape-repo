@@ -33,12 +33,16 @@ const NavigationBar = ({ onClick }: NavigationBarType) => {
 
 const NavItem = ({ children, isClicked, onClick }: NavItemType) => {
   return (
-    <div
-      {...stylex.props(styles.flexCenter, isClicked && styles.isClicked)}
+    <button
+      {...stylex.props(
+        styles.navItemBase,
+        styles.flexCenter,
+        isClicked && styles.isClicked,
+      )}
       onClick={onClick}
     >
       {children}
-    </div>
+    </button>
   );
 };
 
@@ -50,8 +54,6 @@ const styles = stylex.create({
     justifyContent: 'space-around',
     height: '50px',
     gap: '50px',
-    fontWeight: 600,
-    cursor: 'pointer',
     borderBottomWidth: '1px',
     borderBottomStyle: 'solid',
     borderBottomColor: '#dedede',
@@ -68,5 +70,12 @@ const styles = stylex.create({
     borderBottomWidth: '3px',
     borderBottomStyle: 'solid',
     borderBottomColor: 'black',
+  },
+
+  navItemBase: {
+    borderStyle: 'none',
+    backgroundColor: 'transparent',
+    fontWeight: 600,
+    cursor: 'pointer',
   },
 });
