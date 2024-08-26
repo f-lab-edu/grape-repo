@@ -1,5 +1,11 @@
+import { ChatProvider } from '@/features/chat';
+import { ChatPage } from '@/pages/chat';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
 export const Route = createLazyFileRoute('/_auth/chat/')({
-  component: () => <div>Hello /_auth/chat/!</div>,
+  component: () => (
+    <ChatProvider>
+      <ChatPage />
+    </ChatProvider>
+  ),
 });
