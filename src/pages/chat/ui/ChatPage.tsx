@@ -8,14 +8,11 @@ import { memo, useState } from 'react';
 const ChatPage = () => {
   const [selectedNavItem, setSelectedNavItem] = useState<string>('채팅');
 
-  const updateSelectedNavItem = (navItem: string) =>
-    setSelectedNavItem(navItem);
-
   return (
     <PageLayout>
       <Header isPlusIconVisible />
       <NavigationBar
-        onClick={updateSelectedNavItem}
+        onClick={setSelectedNavItem}
         selectedNavItem={selectedNavItem}
       />
       <SearchBar />
