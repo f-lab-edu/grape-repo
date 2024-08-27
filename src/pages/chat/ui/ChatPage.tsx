@@ -1,17 +1,23 @@
-import { ChatListItem, FriendListItem, List, useChat } from '@/features/chat';
+import { ChatListItem, FriendListItem, List } from '@/features/chat';
 import { CHAT_ITEM_MOCK, FRIEND_ITEM_MOCK } from '@/features/chat/mock';
 import { PageLayout, SearchBar } from '@/shared';
 import { Header } from '@/widgets';
 import { NavigationBar } from '@/widgets/navigation';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
 const ChatPage = () => {
-  const { selectedNavItem, handleNavigation } = useChat();
+  const [selectedNavItem, setSelectedNavItem] = useState<string>('채팅');
+
+  const updateSelectedNavItem = (navItem: string) =>
+    setSelectedNavItem(navItem);
 
   return (
     <PageLayout>
       <Header isPlusIconVisible />
-      <NavigationBar onClick={handleNavigation} />
+      <NavigationBar
+        onClick={updateSelectedNavItem}
+        selectedNavItem={selectedNavItem}
+      />
       <SearchBar />
 
       {selectedNavItem === '채팅' && (

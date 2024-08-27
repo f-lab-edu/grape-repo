@@ -28,11 +28,6 @@ export type UserName = {
 	userName: string;
 };
 
-export type ChatContextType = {
-	selectedNavItem: string;
-	handleNavigation: (index: number) => void;
-};
-
 export type FriendListItemType = {
 	id: number;
 	name: string;

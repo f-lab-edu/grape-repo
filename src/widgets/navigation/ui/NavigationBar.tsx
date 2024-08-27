@@ -1,4 +1,3 @@
-import { useChat } from '@/features/chat';
 import { navList } from '@/shared';
 import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
@@ -10,19 +9,18 @@ type NavItemType = {
 };
 
 type NavigationBarType = {
-  onClick: (i: number) => void;
+  selectedNavItem: string;
+  onClick: (i: string) => void;
 };
 
-const NavigationBar = ({ onClick }: NavigationBarType) => {
-  const { selectedNavItem } = useChat();
-
+const NavigationBar = ({ onClick, selectedNavItem }: NavigationBarType) => {
   return (
     <nav {...stylex.props(styles.box)}>
-      {navList.map((title, i) => (
+      {navList.map((title) => (
         <NavItem
           key={title}
           isClicked={title === selectedNavItem}
-          onClick={() => onClick(i)}
+          onClick={() => onClick(title)}
         >
           {title}
         </NavItem>
