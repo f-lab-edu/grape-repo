@@ -1,11 +1,12 @@
+import { assert } from '@/shared';
 import { useContext } from 'react';
 import { ChatContext } from '..';
 
 const useChat = () => {
   const context = useContext(ChatContext);
-  if (!context) {
-    throw new Error('useChat must be used within a ChatProvider');
-  }
+
+  assert(context, 'useChat must be used within a ChatProvider');
+
   return context;
 };
 
