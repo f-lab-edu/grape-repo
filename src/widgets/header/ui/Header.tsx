@@ -20,14 +20,16 @@ const Header = (props: HeaderProps) => {
   return (
     <div {...stylex.props(styles.box)}>
       <div {...stylex.props(styles.icons)}>
-        {isBackIconVisible && (
-          <ChevronLeftIcon
-            width={30}
-            height={30}
-            cursor={'pointer'}
-            onClick={onBack}
-          />
-        )}
+        <div>
+          {isBackIconVisible && (
+            <ChevronLeftIcon
+              width={30}
+              height={30}
+              cursor={'pointer'}
+              onClick={onBack}
+            />
+          )}
+        </div>
 
         {isPlusIconVisible && (
           <PlusIcon width={30} height={30} cursor={'pointer'} color="#9e9e9e" />

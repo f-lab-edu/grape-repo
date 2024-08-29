@@ -1,3 +1,5 @@
+export const navList = ["채팅", "친구 목록", "설정"] as const;
+
 export const greetingMessages = [
 	{
 		id: 0,
@@ -11,7 +13,7 @@ export const greetingMessages = [
 		id: 2,
 		text: "만나서 반가워요!👍",
 	},
-];
+] as const;
 
 export const emailValidation = {
 	required: "이메일을 입력해주세요",

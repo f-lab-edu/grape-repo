@@ -1,3 +1,7 @@
+import type {
+	CompiledStyles,
+	StyleXArray,
+} from "@stylexjs/stylex/lib/StyleXTypes";
 import type { Session, User } from "@supabase/supabase-js";
 import type { Dispatch, SetStateAction } from "react";
 
@@ -22,4 +26,22 @@ export type AuthContextType = {
 
 export type UserName = {
 	userName: string;
+};
+
+export type FriendListItemType = {
+	id: number;
+	name: string;
+};
+
+export type ChatListItemType = {
+	id: number;
+	name: string;
+	title: string;
+	relativeTime: string;
+	isNew: boolean;
+};
+
+export type TitleType = {
+	text: string;
+	style?: StyleXArray<boolean | CompiledStyles | null | undefined>;
 };
