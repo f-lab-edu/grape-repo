@@ -22,6 +22,6 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     padding: '0 24px',
-    height: '100%',
+    minHeight: '100vh',
   },
 });

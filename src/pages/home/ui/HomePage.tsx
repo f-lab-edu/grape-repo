@@ -18,19 +18,18 @@ const HomePage = () => {
 
   return (
     <PageLayout style={styles.gradientBackground}>
-      <div {...stylex.props(styles.base)}>
-        <Header />
-        <main {...stylex.props(styles.main)}>
-          {greetingMessages?.map((el) => <Bubble key={el.id} data={el} />)}
+      <Header />
+      <main {...stylex.props(styles.main)}>
+        {greetingMessages?.map((el) => <Bubble key={el.id} data={el} />)}
 
-          <div>
-            <h2 {...stylex.props(styles.text)}>안녕하세요!</h2>
-            <p {...stylex.props(styles.text)}>
-              {'grape에 오신걸 환영합니다\n지금 채팅을 시작해보세요!'}
-            </p>
-          </div>
-        </main>
-      </div>
+        <div>
+          <h2 {...stylex.props(styles.text)}>안녕하세요!</h2>
+          <p {...stylex.props(styles.text)}>
+            {'grape에 오신걸 환영합니다\n지금 채팅을 시작해보세요!'}
+          </p>
+        </div>
+      </main>
+
       <ButtonBoxLayout>
         <DefaultButton
           command="카카오 로그인"
@@ -47,10 +46,6 @@ const HomePage = () => {
 export default memo(HomePage);
 
 const styles = stylex.create({
-  base: {
-    height: '100%',
-  },
-
   borderRadius: {
     borderRadius: '12px',
   },
