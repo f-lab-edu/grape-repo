@@ -1,11 +1,11 @@
-import type { FriendListItemType } from '@/shared';
+import type { FriendType } from '@/shared';
 import { PersonIcon } from '@radix-ui/react-icons';
 import * as stylex from '@stylexjs/stylex';
 import { Avatar } from 'antd';
 import { memo } from 'react';
 
-const FriendListItem = ({ data }: { data: FriendListItemType }) => {
-  const { name } = data;
+const FriendListItem = ({ data }: { data: FriendType }) => {
+  const { friendName } = data;
 
   return (
     <div {...stylex.props(styles.flexCenter, styles.box)}>
@@ -14,7 +14,7 @@ const FriendListItem = ({ data }: { data: FriendListItemType }) => {
       </div>
 
       <div {...stylex.props(styles.flexCenter, styles.contentBox)}>
-        <p {...stylex.props(styles.name)}>{name}</p>
+        <p {...stylex.props(styles.name)}>{friendName}</p>
       </div>
     </div>
   );

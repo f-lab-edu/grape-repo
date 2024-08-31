@@ -21,6 +21,7 @@ import { Route as AuthImport } from './routes/_auth'
 const PubIndexLazyImport = createFileRoute('/_pub/')()
 const PubLoginIndexLazyImport = createFileRoute('/_pub/login/')()
 const AuthChatIndexLazyImport = createFileRoute('/_auth/chat/')()
+const AuthChatChatIdLazyImport = createFileRoute('/_auth/chat/$chatId')()
 
 // Create/Update Routes
 
@@ -53,6 +54,13 @@ const AuthChatIndexLazyRoute = AuthChatIndexLazyImport.update({
   import('./routes/_auth.chat.index.lazy').then((d) => d.Route),
 )
 
+const AuthChatChatIdLazyRoute = AuthChatChatIdLazyImport.update({
+  path: '/chat/$chatId',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.chat.$chatId.lazy').then((d) => d.Route),
+)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -78,6 +86,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PubIndexLazyImport
       parentRoute: typeof PubImport
     }
+    '/_auth/chat/$chatId': {
+      id: '/_auth/chat/$chatId'
+      path: '/chat/$chatId'
+      fullPath: '/chat/$chatId'
+      preLoaderRoute: typeof AuthChatChatIdLazyImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/chat/': {
       id: '/_auth/chat/'
       path: '/chat'
@@ -98,7 +113,10 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  AuthRoute: AuthRoute.addChildren({ AuthChatIndexLazyRoute }),
+  AuthRoute: AuthRoute.addChildren({
+    AuthChatChatIdLazyRoute,
+    AuthChatIndexLazyRoute,
+  }),
   PubRoute: PubRoute.addChildren({ PubIndexLazyRoute, PubLoginIndexLazyRoute }),
 })
 
@@ -117,6 +135,7 @@ export const routeTree = rootRoute.addChildren({
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/chat/$chatId",
         "/_auth/chat/"
       ]
     },
@@ -130,6 +149,10 @@ export const routeTree = rootRoute.addChildren({
     "/_pub/": {
       "filePath": "_pub.index.lazy.tsx",
       "parent": "/_pub"
+    },
+    "/_auth/chat/$chatId": {
+      "filePath": "_auth.chat.$chatId.lazy.tsx",
+      "parent": "/_auth"
     },
     "/_auth/chat/": {
       "filePath": "_auth.chat.index.lazy.tsx",
