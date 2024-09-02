@@ -87,11 +87,22 @@ const ChatRoom = () => {
         </div>
       </div>
 
-      <PageLayout>
-        <ul {...stylex.props(styles.ul)}>
-          {renderedMessages}
+      <div>
+        <ul {...stylex.props(styles.ul)} onScroll={handleScroll}>
+          {messages.map((message) => (
+            <li
+              {...stylex.props(
+                styles.list,
+                message.user_id === userId ? styles.user : styles.friend,
+              )}
+              key={message.id}
+            >
+              {message.body}
+            </li>
+          ))}
           <div ref={messagesEndRef} />
         </ul>
+
         <form onSubmit={handleSubmit} {...stylex.props(styles.form)}>
           <Input
             styles={{
@@ -109,7 +120,7 @@ const ChatRoom = () => {
           />
           <button type="submit">Send</button>
         </form>
-      </PageLayout>
+      </div>
     </div>
   );
 };
@@ -127,7 +138,7 @@ const styles = stylex.create({
   },
 
   bottomGrey: {
-    padding: '10px 24px',
+    padding: '24px',
     borderBottomWidth: '1px',
     borderBottomColor: '#dedede',
     borderBottomStyle: 'solid',
@@ -137,7 +148,7 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     gap: '10px',
-    padding: '0',
+    padding: '0 24px',
     height: '460px',
     overflow: 'auto',
   },
@@ -150,7 +161,6 @@ const styles = stylex.create({
   list: {
     width: 'fit-content',
     padding: '10px 15px',
-    listStyle: 'none',
     borderRadius: '30px',
     overflowWrap: 'break-word',
   },
