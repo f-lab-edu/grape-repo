@@ -7,24 +7,24 @@ const useChatsQuery = (userId: string | null) => {
     queryKey: ['chats', userId],
     queryFn: () => fetchChats(userId),
     enabled: !!userId,
+    select: (data) =>
+      data?.map(
+        (chat): ChatItemType => ({
+          chatId: chat.chatid,
+          friendId: chat.friend_id,
+          friendName: chat.friend_name,
+          isNew: chat.isNew,
+          latestMessage: {
+            body: chat.latestmessage_body,
+            created_at: chat.latest_message_created_at,
+          },
+        }),
+      ),
   });
 
   handleError(error);
 
-  const formattedData = data?.map((el) => {
-    return {
-      chatId: el.chatid,
-      friendId: el.friend_id,
-      friendName: el.friend_name,
-      isNew: el.isNew,
-      latestMessage: {
-        body: el.latestmessage_body,
-        created_at: el.latest_message_created_at,
-      },
-    };
-  }) as ChatItemType[];
-
-  return { data: formattedData, isError, isLoading, isSuccess };
+  return { data, isError, isLoading, isSuccess };
 };
 
 export default useChatsQuery;

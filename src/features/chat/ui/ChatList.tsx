@@ -5,11 +5,9 @@ import { memo } from 'react';
 
 const ChatList = () => {
   const { userId } = useAuth();
-  const { data, isLoading, isError } = useChatsQuery(userId);
+  const { data, isLoading } = useChatsQuery(userId);
 
-  // FIXME: 에러바운더리
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading friends.</div>;
 
   return (
     <div {...stylex.props(styles.list)}>

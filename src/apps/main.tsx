@@ -1,12 +1,17 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ErrorPage } from '@/pages/error';
+import { queryClient } from '@/shared';
+import {
+  QueryClientProvider,
+  QueryErrorResetBoundary,
+} from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
+import { ErrorBoundary } from 'react-error-boundary';
 import { routeTree } from './routeTree.gen';
 import '@/apps/global.css';
 
 const router = createRouter({ routeTree });
-const queryClient = new QueryClient();
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
@@ -22,7 +27,18 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <QueryErrorResetBoundary>
+          {({ reset }) => (
+            <ErrorBoundary
+              onReset={reset}
+              fallbackRender={({ resetErrorBoundary }) => (
+                <ErrorPage onClick={resetErrorBoundary} />
+              )}
+            >
+              <RouterProvider router={router} />
+            </ErrorBoundary>
+          )}
+        </QueryErrorResetBoundary>
       </QueryClientProvider>
     </StrictMode>,
   );
