@@ -71,7 +71,6 @@ export default memo(LoginForm);
 
 const styles = stylex.create({
   errors: {
-    margin: 0,
     color: '#EE4A4A',
   },
 });

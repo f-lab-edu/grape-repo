@@ -12,7 +12,6 @@ export default memo(Title);
 
 const styles = stylex.create({
   title: {
-    margin: 0,
     fontSize: '13px',
     fontWeight: 400,
   },

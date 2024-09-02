@@ -53,7 +53,6 @@ const styles = stylex.create({
   },
 
   text: {
-    margin: 0,
     fontSize: '20px',
     fontWeight: 600,
     whiteSpace: 'pre',

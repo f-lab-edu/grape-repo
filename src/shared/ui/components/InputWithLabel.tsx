@@ -27,7 +27,6 @@ const styles = stylex.create({
     gap: '7px',
   },
   label: {
-    margin: 0,
     color: '#a3a3a3',
     fontSize: '13px',
   },
