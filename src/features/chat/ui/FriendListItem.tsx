@@ -38,7 +38,6 @@ const styles = stylex.create({
   },
 
   name: {
-    margin: 0,
     fontWeight: 600,
   },
 });

@@ -20,7 +20,6 @@ const ChatListItem = ({ data }: { data: ChatItemType }) => {
       to="/chat/$chatId"
       params={(prev) => ({ ...prev, chatId })}
       search={{ friendName: friendName }}
-      {...stylex.props(styles.linkStyle)}
     >
       <div {...stylex.props(styles.flexCenter, styles.box)}>
         <div>
@@ -70,16 +69,10 @@ const styles = stylex.create({
   },
 
   name: {
-    margin: 0,
     fontWeight: 600,
   },
 
   isRead: {
     color: '#A3A3A3',
-  },
-
-  linkStyle: {
-    textDecoration: 'none',
-    color: 'inherit',
   },
 });

@@ -71,6 +71,7 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
+    height: '100%',
   },
 
   text: {
