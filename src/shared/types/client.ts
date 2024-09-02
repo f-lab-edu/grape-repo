@@ -30,8 +30,7 @@ export type UserName = {
 	userName: string;
 };
 
-
-export type Message = {
+export type MessageType = {
 	chat_id: string | undefined;
 	user_id: string;
 	id: number;

@@ -1,8 +1,8 @@
-import { type Message, supabase } from '@/shared';
+import { type MessageType, supabase } from '@/shared';
 import { useEffect, useState } from 'react';
 
 const useRealTimeMessages = (chatId: string | undefined) => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
 
   useEffect(() => {
     if (!chatId) return;
@@ -20,7 +20,7 @@ const useRealTimeMessages = (chatId: string | undefined) => {
         (payload) => {
           setMessages((prevMessages) => [
             ...prevMessages,
-            payload.new as Message,
+            payload.new as MessageType,
           ]);
         },
       )

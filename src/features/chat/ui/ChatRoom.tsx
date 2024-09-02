@@ -1,7 +1,7 @@
 import { useAuth } from '@/entities/auth';
 import { sendChatMessage, useMessagesQuery } from '@/features/chat';
 import useRealTimeMessages from '@/features/chat/hooks/useRealTimeMessages';
-import { type Message, PageLayout } from '@/shared';
+import { type MessageType, PageLayout } from '@/shared';
 import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import * as stylex from '@stylexjs/stylex';
 import { useLocation, useParams, useRouter } from '@tanstack/react-router';
@@ -9,7 +9,7 @@ import { Input } from 'antd';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const ChatRoom = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [newMessage, setNewMessage] = useState('');
 
   const router = useRouter();
