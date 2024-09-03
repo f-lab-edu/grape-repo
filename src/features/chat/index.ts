@@ -15,4 +15,5 @@ export { default as useRealTimeMessages } from "./hooks/useRealTimeMessages";
 export { default as useChatsQuery } from "./model/useChatsQuery";
 export { default as useFriendsQuery } from "./model/useFriendsQuery";
 export { default as useMessagesQuery } from "./model/useMessageQuery";
+export { default as useMessageMutation } from "./model/useMessageMutation";
 

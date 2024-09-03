@@ -1,4 +1,4 @@
-import { handleError, supabase } from '@/shared';
+import { type MessageType, handleError, supabase } from '@/shared';
 
 const fetchMessagesForChat = async (chatId: string | undefined) => {
   const { data, error } = await supabase
@@ -9,7 +9,7 @@ const fetchMessagesForChat = async (chatId: string | undefined) => {
 
   handleError(error);
 
-  return data;
+  return data as MessageType[];
 };
 
 export default fetchMessagesForChat;

@@ -1,17 +1,14 @@
 import { useAuth } from '@/entities/auth';
-import { sendChatMessage, useMessagesQuery } from '@/features/chat';
+import { useMessageMutation, useMessagesQuery } from '@/features/chat';
 import useRealTimeMessages from '@/features/chat/hooks/useRealTimeMessages';
-import { type MessageType, PageLayout } from '@/shared';
+import type { MessageType } from '@/shared';
 import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import * as stylex from '@stylexjs/stylex';
 import { useLocation, useParams, useRouter } from '@tanstack/react-router';
 import { Input } from 'antd';
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 const ChatRoom = () => {
-  const [messages, setMessages] = useState<MessageType[]>([]);
-  const [newMessage, setNewMessage] = useState('');
-
   const router = useRouter();
   const location = useLocation();
   const { chatId } = useParams({ strict: false });
@@ -20,58 +17,52 @@ const ChatRoom = () => {
 
   const { userId } = useAuth();
   const realTimeMessages = useRealTimeMessages(chatId);
-  const {
-    data: initialMessages,
-    isLoading,
-    isError,
-  } = useMessagesQuery(chatId);
+  const { data: initailMessages, isLoading } = useMessagesQuery(chatId);
+  const { mutate } = useMessageMutation();
 
+  const [messages, setMessages] = useState<MessageType[] | []>([]);
+  const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
       if (userId) {
-        await sendChatMessage(chatId, userId, newMessage);
+        mutate({ chat_id: chatId, user_id: userId, body: newMessage });
         setNewMessage('');
       }
     },
 
-    [chatId, userId, newMessage],
-  );
-
-  const renderedMessages = useMemo(
-    () =>
-      messages.map((message) => (
-        <li
-          {...stylex.props(
-            styles.list,
-            message.user_id === userId ? styles.user : styles.friend,
-          )}
-          key={message.id}
-        >
-          {message.body}
-        </li>
-      )),
-    [messages, userId],
+    [chatId, userId, newMessage, mutate],
   );
 
   useEffect(() => {
-    if (!isLoading && messagesEndRef.current && messages) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current && messages) {
+      messagesEndRef.current.scrollIntoView({
+        block: 'end',
+      });
     }
-  }, [isLoading, messages]);
+  }, [messages]);
 
   useEffect(() => {
-    if (initialMessages) {
-      setMessages([...initialMessages, ...realTimeMessages]);
+    if (initailMessages) {
+      setMessages(initailMessages);
     }
-  }, [initialMessages, realTimeMessages]);
+  }, [initailMessages]);
+
+  useEffect(() => {
+    if (realTimeMessages.length > 0) {
+      setMessages((prevMessages) => {
+        const prevMessageIds = new Set(prevMessages.map((msg) => msg.id));
+        const newMessages = realTimeMessages.filter(
+          (msg) => !prevMessageIds.has(msg.id),
+        );
+        return [...prevMessages, ...newMessages];
+      });
+    }
+  }, [realTimeMessages]);
 
   if (isLoading) return <p>Loading...</p>;
-  if (isError) {
-    return <p>Error loading messages</p>;
-  }
 
   return (
     <div {...stylex.props(styles.box)}>
@@ -88,7 +79,7 @@ const ChatRoom = () => {
       </div>
 
       <div>
-        <ul {...stylex.props(styles.ul)} onScroll={handleScroll}>
+        <ul {...stylex.props(styles.ul)}>
           {messages.map((message) => (
             <li
               {...stylex.props(

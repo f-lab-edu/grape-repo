@@ -31,7 +31,7 @@ export type UserName = {
 };
 
 export type MessageType = {
-	chat_id: string | undefined;
+	chat_id: string;
 	user_id: string;
 	id: number;
 	body: string;

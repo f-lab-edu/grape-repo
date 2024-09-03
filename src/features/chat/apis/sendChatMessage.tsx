@@ -1,13 +1,15 @@
 import { handleError, supabase } from '@/shared';
 
-const sendChatMessage = async (
-  chatId: string | undefined,
-  userId: string,
-  body: string,
-) => {
+type MessageBodyType = {
+  chat_id: string | undefined;
+  user_id: string;
+  body: string;
+};
+
+const sendChatMessage = async ({ chat_id, user_id, body }: MessageBodyType) => {
   const { error } = await supabase
     .from('messages')
-    .insert([{ chat_id: chatId, user_id: userId, body }]);
+    .insert([{ chat_id, user_id, body }]);
 
   handleError(error);
 };
