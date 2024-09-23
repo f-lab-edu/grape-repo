@@ -75,13 +75,11 @@ const styles = stylex.create({
   },
 
   label: {
-    margin: 0,
     color: '#a3a3a3',
     fontSize: '14px',
   },
 
   errors: {
-    margin: 0,
     color: '#EE4A4A',
   },
 });

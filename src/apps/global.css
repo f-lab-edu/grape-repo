@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 @stylex stylesheet;
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
@@ -9,6 +17,26 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+dt,
+dd,
+label,
+table {
+  margin: 0;
+}
+
+ol,
+ul {
+  margin: 0;
+  list-style: none;
+}
 #root {
   height: 100%;
 }

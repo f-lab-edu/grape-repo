@@ -6,9 +6,7 @@ const signInUser = async ({ email, password }: UserInfo) => {
     password,
   });
 
-  handleError(error);
-
-  return data;
+  return handleError({ data, error });
 };
 
 export default signInUser;

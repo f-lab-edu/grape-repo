@@ -1,14 +1,11 @@
-import {
-  checkEmailExists,
-  useLoginMutation,
-  useSignUpMutation,
-} from '@/features/loginForm';
+import { useLoginMutation, useSignUpMutation } from '@/features/loginForm';
 import {
   FormLayout,
   InputWithLabel,
   type UserInfo,
   emailValidation,
   passwordValidation,
+  selectEmail,
 } from '@/shared';
 import * as stylex from '@stylexjs/stylex';
 import { memo, useCallback } from 'react';
@@ -35,8 +32,8 @@ const LoginForm = () => {
   const handleSignUp: SubmitHandler<UserInfo> = useCallback(
     async (data) => {
       if (data) {
-        const isEmailExists = await checkEmailExists(data.email);
-        if (!isEmailExists) signUpMutaiton(data);
+        const email = await selectEmail(data.email);
+        if (!email) signUpMutaiton(data);
         else loginMutation(data);
       }
     },
@@ -71,7 +68,6 @@ export default memo(LoginForm);
 
 const styles = stylex.create({
   errors: {
-    margin: 0,
     color: '#EE4A4A',
   },
 });

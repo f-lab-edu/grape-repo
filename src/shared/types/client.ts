@@ -18,30 +18,42 @@ export type ResponseUserData = {
 };
 
 export type AuthContextType = {
+	userId: string | undefined;
 	session: SessionType;
 	userName: string | null;
 	setUserName: Dispatch<SetStateAction<string | null>>;
-	setSession: Dispatch<SetStateAction<SessionType | null>>;
+
 };
 
 export type UserName = {
 	userName: string;
 };
 
-export type FriendListItemType = {
+export type Messages = {
+	chat_id: string;
+	user_id: string;
 	id: number;
-	name: string;
+	body: string;
+	created_at: string;
 };
 
-export type ChatListItemType = {
-	id: number;
-	name: string;
-	title: string;
-	relativeTime: string;
+export type ChatItemType = {
+	friendId: string;
+	friendName: string;
+	latestMessage: {
+		body: string;
+		created_at: string;
+	};
 	isNew: boolean;
+	chatId: string;
 };
 
 export type TitleType = {
 	text: string;
 	style?: StyleXArray<boolean | CompiledStyles | null | undefined>;
+};
+
+export type FriendType = {
+	id: string;
+	friendName: string;
 };
