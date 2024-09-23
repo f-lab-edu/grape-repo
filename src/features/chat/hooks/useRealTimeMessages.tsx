@@ -1,9 +1,10 @@
-import { type MessageType, supabase } from '@/shared';
-import { useEffect, useState } from 'react';
+import { type Messages, supabase } from '@/shared';
+import { useEffect } from 'react';
 
-const useRealTimeMessages = (chatId: string | undefined) => {
-  const [messages, setMessages] = useState<MessageType[]>([]);
-
+const useRealTimeMessages = (
+  chatId: string | undefined,
+  setMessages: (messages: React.SetStateAction<Messages[]>) => void,
+) => {
   useEffect(() => {
     if (!chatId) return;
 
@@ -20,7 +21,7 @@ const useRealTimeMessages = (chatId: string | undefined) => {
         (payload) => {
           setMessages((prevMessages) => [
             ...prevMessages,
-            payload.new as MessageType,
+            payload.new as Messages,
           ]);
         },
       )
@@ -29,9 +30,7 @@ const useRealTimeMessages = (chatId: string | undefined) => {
     return () => {
       channel.unsubscribe();
     };
-  }, [chatId]);
-
-  return messages;
+  }, [chatId, setMessages]);
 };
 
 export default useRealTimeMessages;

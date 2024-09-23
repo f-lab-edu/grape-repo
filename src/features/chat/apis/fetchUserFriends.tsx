@@ -1,6 +1,6 @@
 import { handleError, supabase } from '@/shared';
 
-const fetchUserFriends = async (userId: string | null) =>
+const fetchUserFriends = async (userId: string | undefined) =>
   supabase
     .from('friends')
     .select('friend_id, friend_name')

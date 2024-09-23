@@ -18,11 +18,10 @@ export type ResponseUserData = {
 };
 
 export type AuthContextType = {
-	userId: string | null;
+	userId: string | undefined;
 	session: SessionType;
 	userName: string | null;
 	setUserName: Dispatch<SetStateAction<string | null>>;
-	setSession: Dispatch<SetStateAction<SessionType | null>>;
 
 };
 
@@ -30,7 +29,7 @@ export type UserName = {
 	userName: string;
 };
 
-export type MessageType = {
+export type Messages = {
 	chat_id: string;
 	user_id: string;
 	id: number;

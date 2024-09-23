@@ -2,7 +2,7 @@ import { fetchUserFriends } from '@/features/chat';
 import { type FriendType, handleError } from '@/shared';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-const useFriendsQuery = (userId: string | null) => {
+const useFriendsQuery = (userId: string | undefined) => {
   const { error, ...rest } = useSuspenseQuery({
     queryKey: ['friends', userId],
     queryFn: () => fetchUserFriends(userId),
