@@ -9,13 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     container: pandoc/latex
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install mustache (to update the date)
         run: apk add ruby && gem install mustache
-      - name: Set up Node.js 16 for the build
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
       - name: creates output
         run: sh ./build.sh
       - name: Pushes to another repository
