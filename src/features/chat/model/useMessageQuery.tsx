@@ -3,15 +3,13 @@ import { handleError } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
 
 const useMessagesQuery = (chatId: string | undefined) => {
-  const { data, error, isLoading, isError } = useQuery({
+  const { error, ...rest } = useQuery({
     queryKey: ['messages', chatId],
     queryFn: () => fetchMessagesForChat(chatId),
     enabled: !!chatId,
   });
 
-  handleError(error);
-
-  return { data, isLoading, isError };
+  return handleError({ data: rest, error });
 };
 
 export default useMessagesQuery;

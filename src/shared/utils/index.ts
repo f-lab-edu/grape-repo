@@ -1,5 +1,7 @@
-export const handleError = (error: unknown) => {
+export const handleError = <T>({data, error} : {data: T, error:unknown }) => {
 	if (error) throw error;
+	
+	return data
 };
 
 export const assert: (

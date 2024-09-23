@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import fetchChats from '../apis/fetchUserChats';
 
 const useChatsQuery = (userId: string | null) => {
-  const { data, error, isError, isLoading, isSuccess } = useQuery({
+  const { error, ...rest } = useQuery({
     queryKey: ['chats', userId],
     queryFn: () => fetchChats(userId),
     enabled: !!userId,
@@ -22,9 +22,7 @@ const useChatsQuery = (userId: string | null) => {
       ),
   });
 
-  handleError(error);
-
-  return { data, isError, isLoading, isSuccess };
+  return handleError({ data: rest, error });
 };
 
 export default useChatsQuery;

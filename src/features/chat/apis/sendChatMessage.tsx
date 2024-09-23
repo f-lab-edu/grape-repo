@@ -6,12 +6,10 @@ type MessageBodyType = {
   body: string;
 };
 
-const sendChatMessage = async ({ chat_id, user_id, body }: MessageBodyType) => {
-  const { error } = await supabase
+const sendChatMessage = async ({ chat_id, user_id, body }: MessageBodyType) =>
+  supabase
     .from('messages')
-    .insert([{ chat_id, user_id, body }]);
-
-  handleError(error);
-};
+    .insert([{ chat_id, user_id, body }])
+    .then(handleError);
 
 export default sendChatMessage;

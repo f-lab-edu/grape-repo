@@ -1,11 +1,6 @@
 import { handleError, selectEmail } from '@/shared';
 
-const checkEmailExists = async (email: string) => {
-  const { data, error } = await selectEmail(email);
-
-  handleError(error);
-
-  return data?.length;
-};
+const checkEmailExists = async (email: string) =>
+  selectEmail(email).then(handleError);
 
 export default checkEmailExists;

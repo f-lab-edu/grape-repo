@@ -3,7 +3,7 @@ import { type FriendType, handleError } from '@/shared';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 const useFriendsQuery = (userId: string | null) => {
-  const { data, error, isError, isLoading } = useSuspenseQuery({
+  const { error, ...rest } = useSuspenseQuery({
     queryKey: ['friends', userId],
     queryFn: () => fetchUserFriends(userId),
     select: (data) =>
@@ -15,9 +15,7 @@ const useFriendsQuery = (userId: string | null) => {
       }),
   });
 
-  handleError(error);
-
-  return { data, isError, isLoading };
+  return handleError({ data: rest, error });
 };
 
 export default useFriendsQuery;

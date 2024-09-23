@@ -1,11 +1,6 @@
 import { handleError, selectEmail } from '@/shared';
 
-const checkUserNameExists = async (email: string | undefined) => {
-  const { data, error } = await selectEmail(email);
-
-  handleError(error);
-
-  return data?.[0]?.user_name;
-};
+const checkUserNameExists = async (email: string | undefined) =>
+  selectEmail(email).then(handleError);
 
 export default checkUserNameExists;

@@ -5,7 +5,7 @@ import sendChatMessage from '../apis/sendChatMessage';
 const useMessageMutation = () => {
   const { mutate, isError } = useMutation({
     mutationFn: sendChatMessage,
-    onError: (error) => handleError(error),
+    onError: (error) => handleError({ data: null, error }),
   });
 
   return { mutate, isError };
